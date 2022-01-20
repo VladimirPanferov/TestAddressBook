@@ -1,4 +1,3 @@
-from re import A
 from fastapi import APIRouter
 
 
