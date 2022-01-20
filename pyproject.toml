@@ -8,6 +8,7 @@ authors = ["Vladimir Panferov <v3nseagal@gmail.com>"]
 python = "^3.9"
 fastapi = {extras = ["all"], version = "^0.72.0"}
 SQLAlchemy = "^1.4.29"
+python-dotenv = "^0.19.2"
 
 [tool.poetry.dev-dependencies]
 

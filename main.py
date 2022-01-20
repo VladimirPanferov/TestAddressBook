@@ -1,24 +1,21 @@
-from fastapi import FastAPI
+from fastapi import (
+    FastAPI,
+    APIRouter
+)
+
+import api
 
 
-app = FastAPI()
+tasg_metadata = [
+    {
+        "name": "users",
+        "description": "Создание, редактирование, удаление и просмотр пользователей",
+    },
+]
 
-
-@app.post("/users")
-def get_users():
-    pass
-
-
-@app.put("/user")
-def create_user():
-    pass
-
-
-@app.patch("/user")
-def edit_user():
-    pass
-
-
-@app.delete("/user")
-def delete_user():
-    pass
+app = FastAPI(
+    title="Address book",
+    description="Тестовое приложение 'Адрессная книга'",
+    openapi_tags=tasg_metadata
+)
+app.include_router(api.router)
