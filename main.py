@@ -1,7 +1,4 @@
-from fastapi import (
-    FastAPI,
-    APIRouter
-)
+from fastapi import FastAPI
 
 import api
 
