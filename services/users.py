@@ -42,7 +42,7 @@ class UserService:
     
     def create(self, user_data: user_models.UserCreate) -> tables.User:
         user = tables.User(
-            ** user_data.dict(),
+            **user_data.dict(),
         )
         self.session.add(user)
         self.session.commit()
