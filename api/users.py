@@ -2,7 +2,9 @@ from typing import List
 
 from fastapi import (
     APIRouter,
-    Depends
+    Depends,
+    status,
+    Response,
 )
 from sqlalchemy.orm import Session
 
@@ -20,3 +22,9 @@ router = APIRouter(
 @router.post("/", response_model=List[User])
 def get_users(user_service: UserService = Depends()):
     return user_service.get_users()
+
+
+@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT,)
+def delete_user(user_id: int, user_service: UserService = Depends(),):
+    user_service.delete(user_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
