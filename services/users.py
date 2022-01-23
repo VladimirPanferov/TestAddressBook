@@ -11,6 +11,7 @@ from fastapi import (
 from sqlalchemy.orm import Session
 
 import tables
+from models import users as user_models
 from database import get_session
 
 
@@ -39,6 +40,14 @@ class UserService:
             raise HTTPException(status.HTTP_404_NOT_FOUND)
         return user
     
+    def create(self, user_data: user_models.UserCreate) -> tables.User:
+        user = tables.User(
+            ** user_data.dict(),
+        )
+        self.session.add(user)
+        self.session.commit()
+        return user
+
     def delete(self, user_id: int) -> None:
         user = self.get(user_id=user_id)
         self.session.delete(user)
