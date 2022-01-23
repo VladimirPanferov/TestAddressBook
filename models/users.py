@@ -10,9 +10,25 @@ class Sex(str, Enum):
     FEMALE = "female"
 
 
-class User(BaseModel):
+class BaseUser(BaseModel):
     FIO: str
     avatar: str
     sex: Sex
     birthdate: date
     address: Optional[str]
+
+
+class UserCreate(BaseUser):
+    pass
+
+
+class UserUpdate(BaseUser):
+    pass
+
+
+class User(BaseUser):
+    id: int
+
+
+    class Config:
+        orm_mode = True
