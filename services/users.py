@@ -18,7 +18,7 @@ from database import get_session
 class UserService:
     def __init__(self, session: Session = Depends(get_session)) -> None:
         self.session = session
-        
+
     def get_many(self) -> List[tables.User]:
         users = (
             self.session
@@ -26,7 +26,7 @@ class UserService:
             .all()
         )
         return users
-    
+
     def get(self, user_id: int) -> Optional[tables.User]:
         user = (
             self.session
@@ -39,12 +39,23 @@ class UserService:
         if not user:
             raise HTTPException(status.HTTP_404_NOT_FOUND)
         return user
-    
+
     def create(self, user_data: user_models.UserCreate) -> tables.User:
         user = tables.User(
             **user_data.dict(),
         )
         self.session.add(user)
+        self.session.commit()
+        return user
+
+    def update(
+        self,
+        user_id: int,
+        user_data: user_models.UserUpdate,
+    ) -> tables.User:
+        user = self.get(user_id)
+        for field, value in user_data:
+            setattr(user, field, value)
         self.session.commit()
         return user
 
