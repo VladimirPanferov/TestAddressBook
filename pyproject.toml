@@ -11,6 +11,7 @@ SQLAlchemy = "^1.4.29"
 python-dotenv = "^0.19.2"
 psycopg2-binary = "^2.9.3"
 alembic = "^1.7.5"
+mimesis = "^5.2.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
