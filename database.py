@@ -14,6 +14,7 @@ Session = sessionmaker(
     autoflush=False,
 )
 
+
 def get_session():
     session = Session()
     try:

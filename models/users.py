@@ -6,8 +6,8 @@ from pydantic import BaseModel
 
 
 class Sex(str, Enum):
-    MALE = "male"
-    FEMALE = "female"
+    MALE = "Male"
+    FEMALE = "Female"
 
 
 class BaseUser(BaseModel):
