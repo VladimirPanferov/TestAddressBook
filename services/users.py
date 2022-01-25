@@ -28,11 +28,6 @@ class UserService:
                 tables.Phone.user_id == tables.User.id,
                 isouter=True,
             )
-            ''' .join(
-                tables.Email,
-                tables.Email.user_id == tables.User.id,
-                isrouter=True,
-            ) '''
             .all()
         )
         return users
