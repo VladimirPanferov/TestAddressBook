@@ -46,12 +46,28 @@ class UserService:
         return user
 
     def create(self, user_data: user_models.UserCreate) -> tables.User:
+        phones = user_data.phones
+        user_dict = user_data.dict()
+        user_dict.pop("phones")
+
         user = tables.User(
-            **user_data.dict(),
+            **user_dict,
         )
         self.session.add(user)
+        self.session.flush()
+
+        for phone in phones:
+            self.create_phone(user_id=user.id, phone=phone)
+
         self.session.commit()
         return user
+
+    def create_phone(self, user_id: int, phone: user_models.PhoneBase):
+        user_phone = tables.Phone(
+            **phone.dict(),
+            user_id=user_id,
+        )
+        self.session.add(user_phone)
 
     def update(
         self,

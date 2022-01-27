@@ -16,7 +16,7 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     FIO = Column(String, unique=True)
     avatar = Column(String, unique=True, nullable=True)
     sex = Column(String)

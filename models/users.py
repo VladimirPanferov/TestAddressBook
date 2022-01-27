@@ -26,13 +26,13 @@ class EMailKind(str, Enum):
 
 
 class PhoneBase(BaseModel):
-    user_id: int
     kind: PhoneKind
     phone_number: str
 
 
 class Phone(PhoneBase):
     id: int
+    user_id: int
 
     class Config:
         orm_mode = True
