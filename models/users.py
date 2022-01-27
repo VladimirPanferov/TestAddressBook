@@ -7,8 +7,6 @@ from typing import (
 
 from pydantic import BaseModel
 
-from tables import Email
-
 
 class Sex(str, Enum):
     MALE = "Male"
@@ -39,13 +37,13 @@ class Phone(PhoneBase):
 
 
 class EMailBase(BaseModel):
-    user_id: int
     kind: EMailKind
     email: str
 
 
 class EMail(EMailBase):
     id: int
+    user_id: int
 
     class Config:
         orm_mode = True
@@ -58,7 +56,7 @@ class BaseUser(BaseModel):
     birthdate: date
     address: Optional[str] = ""
     phones: Optional[List[PhoneBase]] = []
-    #emails: Optional[List[EMailBase]] = []
+    emails: Optional[List[EMailBase]] = []
 
 
 class UserCreate(BaseUser):
@@ -72,7 +70,7 @@ class UserUpdate(BaseUser):
 class User(BaseUser):
     id: int
     phones: Optional[List[Phone]] = []
-    #emails: Optional[List[Email]] = []
+    emails: Optional[List[EMail]] = []
 
     class Config:
         orm_mode = True

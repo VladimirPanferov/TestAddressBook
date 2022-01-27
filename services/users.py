@@ -28,6 +28,11 @@ class UserService:
                 tables.Phone.user_id == tables.User.id,
                 isouter=True,
             )
+            .join(
+                tables.Email,
+                tables.Email.user_id == tables.User.id,
+                isouter=True,
+            )
             .all()
         )
         return users
@@ -47,8 +52,10 @@ class UserService:
 
     def create(self, user_data: user_models.UserCreate) -> tables.User:
         phones = user_data.phones
+        emails = user_data.emails
         user_dict = user_data.dict()
         user_dict.pop("phones")
+        user_dict.pop("emails")
 
         user = tables.User(
             **user_dict,
@@ -59,6 +66,9 @@ class UserService:
         for phone in phones:
             self.create_phone(user_id=user.id, phone=phone)
 
+        for email in emails:
+            self.create_email(user_id=user.id, email=email)
+
         self.session.commit()
         return user
 
@@ -68,6 +78,13 @@ class UserService:
             user_id=user_id,
         )
         self.session.add(user_phone)
+
+    def create_email(self, user_id: int, email: user_models.EMailBase):
+        user_email = tables.Email(
+            **email.dict(),
+            user_id=user_id,
+        )
+        self.session.add(user_email)
 
     def update(
         self,
