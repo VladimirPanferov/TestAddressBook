@@ -1,3 +1,4 @@
+import random
 import sys
 
 from mimesis import (
@@ -7,7 +8,11 @@ from mimesis import (
     Datetime,
 )
 from database import get_session
-from tables import User
+from tables import (
+    User,
+    Phone,
+    Email,
+)
 
 
 def generate_users(count):
@@ -27,6 +32,22 @@ def generate_users(count):
             address=address.address()
         )
         session.add(user)
+
+        session.flush()
+
+        user_phone = Phone(
+            user_id=user.id,
+            kind=random.choice(("mobile", "landline")),
+            phone_number=person.telephone()
+        )
+        session.add(user_phone)
+
+        user_email = Email(
+            user_id=user.id,
+            kind=random.choice(("work", "home")),
+            email=person.email(),
+        )
+        session.add(user_email)
 
     try:
         session.commit()
