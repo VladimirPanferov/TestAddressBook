@@ -35,19 +35,25 @@ def generate_users(count):
 
         session.flush()
 
-        user_phone = Phone(
-            user_id=user.id,
-            kind=random.choice(("mobile", "landline")),
-            phone_number=person.telephone()
-        )
-        session.add(user_phone)
+        user_phones = [
+            Phone(
+                user_id=user.id,
+                kind=random.choice(("mobile", "landline")),
+                phone_number=person.telephone(),
+            )
+            for _ in range(random.randint(1, 3))
+        ]
+        session.add_all(user_phones)
 
-        user_email = Email(
-            user_id=user.id,
-            kind=random.choice(("work", "home")),
-            email=person.email(),
-        )
-        session.add(user_email)
+        user_emails = [
+            Email(
+                user_id=user.id,
+                kind=random.choice(("work", "home")),
+                email=person.email(),
+            )
+            for _ in range(random.randint(1, 4))
+        ]
+        session.add_all(user_emails)
 
     try:
         session.commit()
