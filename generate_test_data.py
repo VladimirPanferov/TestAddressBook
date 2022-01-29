@@ -7,7 +7,12 @@ from mimesis import (
     Address,
     Datetime,
 )
+
 from database import get_session
+from models.users import (
+    PhoneKind,
+    EMailKind,
+)
 from tables import (
     User,
     Phone,
@@ -38,7 +43,7 @@ def generate_users(count):
         user_phones = [
             Phone(
                 user_id=user.id,
-                kind=random.choice(("mobile", "landline")),
+                kind=random.choice((PhoneKind.LANDLINE, PhoneKind.MOBILE)),
                 phone_number=person.telephone(),
             )
             for _ in range(random.randint(1, 3))
@@ -48,7 +53,7 @@ def generate_users(count):
         user_emails = [
             Email(
                 user_id=user.id,
-                kind=random.choice(("work", "home")),
+                kind=random.choice((EMailKind.WORK, EMailKind.HOME)),
                 email=person.email(),
             )
             for _ in range(random.randint(1, 4))
