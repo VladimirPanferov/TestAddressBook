@@ -19,7 +19,7 @@ class PhoneKind(str, Enum):
 
 
 class EMailKind(str, Enum):
-    WORD = "work"
+    WORK = "work"
     HOME = "home"
 
 
